@@ -1,0 +1,80 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Ultimate Image Gallery</title><style>
+  body{font-family:Arial;text-align:center;background:#f7f7f7;margin:20px;transition:.4s}
+  button{padding:8px 12px;margin:5px;border:0;border-radius:5px;cursor:pointer;background:#6a5acd;color:#fff;transition:.3s}
+  button:hover{opacity:.8}
+  button.active{background:#ff6347}
+  .controls{margin:10px 0}
+  .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:15px}
+  .item{border-radius:10px;overflow:hidden;display:none;opacity:0;transform:scale(.9);transition:.4s;position:relative}
+  .item img{width:100%;height:130px;object-fit:cover;display:block;transition:.4s;cursor:pointer}
+  .item:hover img{transform:scale(1.1);box-shadow:0 5px 15px rgba(0,0,0,.3)}
+  .show{display:block!important;opacity:1!important;transform:scale(1)!important}
+  input{padding:8px;width:200px;margin:10px;border:1px solid #ccc;border-radius:5px}
+  .dark{background:#222;color:#eee}
+  .dark .item{box-shadow:0 0 5px #fff2}
+  #lightbox{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center;z-index:1000}
+  #lightbox img{max-width:80%;max-height:80%;border-radius:10px}
+  #lightbox button{position:absolute;top:20px;right:20px;background:red}
+  .download,.fav{position:absolute;bottom:8px;padding:5px 8px;background:#000a;color:#fff;font-size:12px;border-radius:5px;cursor:pointer}
+  .download{right:8px} .fav{left:8px}
+  #count{margin-top:10px;font-weight:bold}
+</style></head><body><h2>🔥 Ultimate Image Gallery 🔥</h2>
+<input type="text" id="search" placeholder="Search...">
+<div class="controls"> <button onclick="toggleMode()">🌙 Dark Mode</button>
+  <button onclick="shuffle()">🔀 Shuffle</button> <button onclick="sortAZ()">🔤 Sort A-Z</button></div>
+<div><button class="active" onclick="filter('all',event)">All</button><button onclick="filter('nature',event)">Nature</button>
+<button onclick="filter('cars',event)">Cars</button>  <button onclick="filter('people',event)">People</button>
+</div><p id="count"></p><div class="gallery" id="gallery">
+  <div class="item nature"><img loading="lazy" src="https://sp.yimg.com/ib/th/id/OIP.Lzo8L94jTBLXGTk0BdlgaQHaLH?pid=Api&w=148&h=148&c=7&dpr=2&rs=1"><p>Mountains</p><a class="download" href="https://sp.yimg.com/ib/th/id/OIP.Lzo8L94jTBLXGTk0BdlgaQHaLH?pid=Api&w=148&h=148&c=7&dpr=2&rs=1" download>⬇</a><span class="fav">🤍</span></div>
+<div class="item nature"><img loading="lazy" src="https://tse1.mm.bing.net/th/id/OIP.dI22OgiQxCFyDNQ2PaNtvQHaE8?pid=Api&rs=1&c=1&qlt=95&w=149&h=99"><p>Mountains</p><a class="download" href="https://tse1.mm.bing.net/th/id/OIP.dI22OgiQxCFyDNQ2PaNtvQHaE8?pid=Api&rs=1&c=1&qlt=95&w=149&h=99" download>⬇</a><span class="fav">🤍</span></div>
+<div class="item nature"><img loading="lazy" src="https://sp.yimg.com/ib/th/id/OIP.Lzo8L94jTBLXGTk0BdlgaQHaLH?pid=Api&w=148&h=148&c=7&dpr=2&rs=1"><p>Mountains</p><a class="download" href="https://sp.yimg.com/ib/th/id/OIP.Lzo8L94jTBLXGTk0BdlgaQHaLH?pid=Api&w=148&h=148&c=7&dpr=2&rs=1" download>⬇</a><span class="fav">🤍</span></div>
+<div class="item nature"><img loading="lazy" src="https://sp.yimg.com/ib/th/id/OIP.Lzo8L94jTBLXGTk0BdlgaQHaLH?pid=Api&w=148&h=148&c=7&dpr=2&rs=1"><p>Mountains</p><a class="download" href="https://sp.yimg.com/ib/th/id/OIP.Lzo8L94jTBLXGTk0BdlgaQHaLH?pid=Api&w=148&h=148&c=7&dpr=2&rs=1" download>⬇</a><span class="fav">🤍</span></div>
+<div class="item nature"><img loading="lazy" src="https://tse1.mm.bing.net/th/id/OIP.dI22OgiQxCFyDNQ2PaNtvQHaE8?pid=Api&rs=1&c=1&qlt=95&w=149&h=99"><p>Mountains</p><a class="download" href="https://tse1.mm.bing.net/th/id/OIP.dI22OgiQxCFyDNQ2PaNtvQHaE8?pid=Api&rs=1&c=1&qlt=95&w=149&h=99" download>⬇</a><span class="fav">🤍</span></div>
+<div class="item nature"><img loading="lazy" src="https://sp.yimg.com/ib/th/id/OIP.Lzo8L94jTBLXGTk0BdlgaQHaLH?pid=Api&w=148&h=148&c=7&dpr=2&rs=1"><p>Mountains</p><a class="download" href="https://sp.yimg.com/ib/th/id/OIP.Lzo8L94jTBLXGTk0BdlgaQHaLH?pid=Api&w=148&h=148&c=7&dpr=2&rs=1" download>⬇</a><span class="fav">🤍</span></div>
+<div class="item nature"><img loading="lazy" src="https://tse1.mm.bing.net/th/id/OIP.dI22OgiQxCFyDNQ2PaNtvQHaE8?pid=Api&rs=1&c=1&qlt=95&w=149&h=99"><p>Mountains</p><a class="download" href="https://tse1.mm.bing.net/th/id/OIP.dI22OgiQxCFyDNQ2PaNtvQHaE8?pid=Api&rs=1&c=1&qlt=95&w=149&h=99" download>⬇</a><span class="fav">🤍</span></div>
+<div class="item nature"><img loading="lazy" src="https://sp.yimg.com/ib/th/id/OIP.Lzo8L94jTBLXGTk0BdlgaQHaLH?pid=Api&w=148&h=148&c=7&dpr=2&rs=1"><p>Mountains</p><a class="download" href="https://sp.yimg.com/ib/th/id/OIP.Lzo8L94jTBLXGTk0BdlgaQHaLH?pid=Api&w=148&h=148&c=7&dpr=2&rs=1" download>⬇</a><span class="fav">🤍</span></div>
+<div class="item nature"><img loading="lazy" src="https://tse1.mm.bing.net/th/id/OIP.dI22OgiQxCFyDNQ2PaNtvQHaE8?pid=Api&rs=1&c=1&qlt=95&w=149&h=99"><p>Mountains</p><a class="download" href="https://tse1.mm.bing.net/th/id/OIP.dI22OgiQxCFyDNQ2PaNtvQHaE8?pid=Api&rs=1&c=1&qlt=95&w=149&h=99" download>⬇</a><span class="fav">🤍</span></div>
+<div class="item nature"><img loading="lazy" src="https://sp.yimg.com/ib/th/id/OIP.Lzo8L94jTBLXGTk0BdlgaQHaLH?pid=Api&w=148&h=148&c=7&dpr=2&rs=1"><p>Mountains</p><a class="download" href="https://sp.yimg.com/ib/th/id/OIP.Lzo8L94jTBLXGTk0BdlgaQHaLH?pid=Api&w=148&h=148&c=7&dpr=2&rs=1" download>⬇</a><span class="fav">🤍</span></div>
+<div class="item nature"><img loading="lazy" src="https://tse1.mm.bing.net/th/id/OIP.dI22OgiQxCFyDNQ2PaNtvQHaE8?pid=Api&rs=1&c=1&qlt=95&w=149&h=99"><p>Mountains</p><a class="download" href="https://tse1.mm.bing.net/th/id/OIP.dI22OgiQxCFyDNQ2PaNtvQHaE8?pid=Api&rs=1&c=1&qlt=95&w=149&h=99" download>⬇</a><span class="fav">🤍</span></div>
+<div class="item cars"><img loading="lazy" src="https://tse1.mm.bing.net/th/id/OIP.khB7mYDhxl-GBTasq8jdgQHaEo?pid=Api&rs=1&c=1&qlt=95&w=156&h=97"><p>Red Car</p><a class="download" href="https://tse1.mm.bing.net/th/id/OIP.khB7mYDhxl-GBTasq8jdgQHaEo?pid=Api&rs=1&c=1&qlt=95&w=156&h=97" download>⬇</a><span class="fav">🤍</span></div>
+<div class="item people"><img loading="lazy" src="https://tse1.mm.bing.net/th/id/OIP.x0VUtJyqH84gTMnouwKhzgHaEo?pid=Api&rs=1&c=1&qlt=95&w=154&h=96"><p>Red Car</p><a class="download" href="https://tse1.mm.bing.net/th/id/OIP.x0VUtJyqH84gTMnouwKhzgHaEo?pid=Api&rs=1&c=1&qlt=95&w=154&h=96" download>⬇</a><span class="fav">🤍</span></div>  
+<div class="item cars"><img loading="lazy" src="https://tse1.mm.bing.net/th/id/OIP.khB7mYDhxl-GBTasq8jdgQHaEo?pid=Api&rs=1&c=1&qlt=95&w=156&h=97"><p>Red Car</p><a class="download" href="https://tse1.mm.bing.net/th/id/OIP.khB7mYDhxl-GBTasq8jdgQHaEo?pid=Api&rs=1&c=1&qlt=95&w=156&h=97" download>⬇</a><span class="fav">🤍</span></div>
+  <div class="item people"><img loading="lazy" src="https://tse1.mm.bing.net/th/id/OIP.x0VUtJyqH84gTMnouwKhzgHaEo?pid=Api&rs=1&c=1&qlt=95&w=154&h=96"><p>Red Car</p><a class="download" href="https://tse1.mm.bing.net/th/id/OIP.x0VUtJyqH84gTMnouwKhzgHaEo?pid=Api&rs=1&c=1&qlt=95&w=154&h=96" download>⬇</a><span class="fav">🤍</span></div>
+  <div class="item nature"><img loading="lazy" src="https://tse1.mm.bing.net/th/id/OIP.1XsXMMT0Dr1SVM53PIZRRwHaE6?pid=Api&rs=1&c=1&qlt=95&w=152&h=100"><p>Forest</p><a class="download" href="https://tse1.mm.bing.net/th/id/OIP.1XsXMMT0Dr1SVM53PIZRRwHaE6?pid=Api&rs=1&c=1&qlt=95&w=152&h=100" download>⬇</a><span class="fav">🤍</span></div>
+  <div class="item cars"><img loading="lazy" src="https://tse1.mm.bing.net/th/id/OIP.L_wr5vbGvq_E1sIRrx5dUwHaEo?pid=Api&rs=1&c=1&qlt=95&w=146&h=91"><p>Forest</p><a class="download" href="https://tse1.mm.bing.net/th/id/OIP.L_wr5vbGvq_E1sIRrx5dUwHaEo?pid=Api&rs=1&c=1&qlt=95&w=146&h=91" download>⬇</a><span class="fav">🤍</span></div>
+  <div class="item people"><img loading="lazy" src="https://tse1.mm.bing.net/th/id/OIP.g9JQBsgn1JtJ4WirA1--IQHaHa?pid=Api&rs=1&c=1&qlt=95&w=116&h=116"><p>Man</p><a class="download" href="https://tse1.mm.bing.net/th/id/OIP.7Lrk8fR-CG-ATQ3auM-y8AHaKT?pid=Api&rs=1&c=1&qlt=95&w=83&h=116" download>⬇</a><span class="fav">🤍</span></div>
+  <div class="item people"><img loading="lazy" src="https://tse1.mm.bing.net/th/id/OIP.qVs2yrslIxZv3QqUE0HTVQHaIj?pid=Api&rs=1&c=1&qlt=95&w=101&h=116"><p>Man</p><a class="download" href="https://tse1.mm.bing.net/th/id/OIP.7Lrk8fR-CG-ATQ3auM-y8AHaKT?pid=Api&rs=1&c=1&qlt=95&w=83&h=116" download>⬇</a><span class="fav">🤍</span></div>
+  <div class="item people"><img loading="lazy" src="https://tse1.mm.bing.net/th/id/OIP.NCBvXVCoUU7UXt-m-J4CrAHaLj?pid=Api&rs=1&c=1&qlt=95&w=78&h=122"><p>Man</p><a class="download" href="https://tse1.mm.bing.net/th/id/OIP.NCBvXVCoUU7UXt-m-J4CrAHaLj?pid=Api&rs=1&c=1&qlt=95&w=78&h=122" download>⬇</a><span class="fav">🤍</span></div>
+  <div class="item people"><img loading="lazy" src="https://tse1.mm.bing.net/th/id/OIP.7Lrk8fR-CG-ATQ3auM-y8AHaKT?pid=Api&rs=1&c=1&qlt=95&w=83&h=116"><p>Man</p><a class="download" href="https://tse1.mm.bing.net/th/id/OIP.7Lrk8fR-CG-ATQ3auM-y8AHaKT?pid=Api&rs=1&c=1&qlt=95&w=83&h=116" download>⬇</a><span class="fav">🤍</span></div>
+    <div class="item nature"><img loading="lazy" src="https://tse1.mm.bing.net/th/id/OIP.1XsXMMT0Dr1SVM53PIZRRwHaE6?pid=Api&rs=1&c=1&qlt=95&w=152&h=100"><p>Forest</p><a class="download" href="https://tse1.mm.bing.net/th/id/OIP.1XsXMMT0Dr1SVM53PIZRRwHaE6?pid=Api&rs=1&c=1&qlt=95&w=152&h=100" download>⬇</a><span class="fav">🤍</span></div>
+  <div class="item cars"><img loading="lazy" src="https://tse1.mm.bing.net/th/id/OIP.L_wr5vbGvq_E1sIRrx5dUwHaEo?pid=Api&rs=1&c=1&qlt=95&w=146&h=91"><p>Forest</p><a class="download" href="https://tse1.mm.bing.net/th/id/OIP.L_wr5vbGvq_E1sIRrx5dUwHaEo?pid=Api&rs=1&c=1&qlt=95&w=146&h=91" download>⬇</a><span class="fav">🤍</span></div>
+<div class="item cars"><img loading="lazy" src="https://tse1.mm.bing.net/th/id/OIP.khB7mYDhxl-GBTasq8jdgQHaEo?pid=Api&rs=1&c=1&qlt=95&w=156&h=97"><p>Red Car</p><a class="download" href="https://tse1.mm.bing.net/th/id/OIP.khB7mYDhxl-GBTasq8jdgQHaEo?pid=Api&rs=1&c=1&qlt=95&w=156&h=97" download>⬇</a><span class="fav">🤍</span></div>
+  <div class="item people"><img loading="lazy" src="https://tse1.mm.bing.net/th/id/OIP.x0VUtJyqH84gTMnouwKhzgHaEo?pid=Api&rs=1&c=1&qlt=95&w=154&h=96"><p>Red Car</p><a class="download" href="https://tse1.mm.bing.net/th/id/OIP.x0VUtJyqH84gTMnouwKhzgHaEo?pid=Api&rs=1&c=1&qlt=95&w=154&h=96" download>⬇</a><span class="fav">🤍</span></div>
+  <div class="item nature"><img loading="lazy" src="https://tse1.mm.bing.net/th/id/OIP.1XsXMMT0Dr1SVM53PIZRRwHaE6?pid=Api&rs=1&c=1&qlt=95&w=152&h=100"><p>Forest</p><a class="download" href="https://tse1.mm.bing.net/th/id/OIP.1XsXMMT0Dr1SVM53PIZRRwHaE6?pid=Api&rs=1&c=1&qlt=95&w=152&h=100" download>⬇</a><span class="fav">🤍</span></div>
+  <div class="item cars"><img loading="lazy" src="https://tse1.mm.bing.net/th/id/OIP.L_wr5vbGvq_E1sIRrx5dUwHaEo?pid=Api&rs=1&c=1&qlt=95&w=146&h=91"><p>Forest</p><a class="download" href="https://tse1.mm.bing.net/th/id/OIP.L_wr5vbGvq_E1sIRrx5dUwHaEo?pid=Api&rs=1&c=1&qlt=95&w=146&h=91" download>⬇</a><span class="fav">🤍</span></div>
+  <div class="item people"><img loading="lazy" src="https://tse1.mm.bing.net/th/id/OIP.qVs2yrslIxZv3QqUE0HTVQHaIj?pid=Api&rs=1&c=1&qlt=95&w=101&h=116"><p>Man</p><a class="download" href="https://tse1.mm.bing.net/th/id/OIP.7Lrk8fR-CG-ATQ3auM-y8AHaKT?pid=Api&rs=1&c=1&qlt=95&w=83&h=116" download>⬇</a><span class="fav">🤍</span></div>
+  <div class="item people"><img loading="lazy" src="https://tse1.mm.bing.net/th/id/OIP.NCBvXVCoUU7UXt-m-J4CrAHaLj?pid=Api&rs=1&c=1&qlt=95&w=78&h=122"><p>Man</p><a class="download" href="https://tse1.mm.bing.net/th/id/OIP.NCBvXVCoUU7UXt-m-J4CrAHaLj?pid=Api&rs=1&c=1&qlt=95&w=78&h=122" download>⬇</a><span class="fav">🤍</span></div>
+  <div class="item people"><img loading="lazy" src="https://tse1.mm.bing.net/th/id/OIP.7Lrk8fR-CG-ATQ3auM-y8AHaKT?pid=Api&rs=1&c=1&qlt=95&w=83&h=116"><p>Man</p><a class="download" href="https://tse1.mm.bing.net/th/id/OIP.7Lrk8fR-CG-ATQ3auM-y8AHaKT?pid=Api&rs=1&c=1&qlt=95&w=83&h=116" download>⬇</a><span class="fav">🤍</span></div></div>
+<div id="lightbox"><img><button onclick="closeLightbox()">❌</button></div>
+<script> function filter(c,e){let x=document.querySelectorAll(".item");c=c=="all"?"":c;
+let count=0;x.forEach(i=>{i.classList.remove("show");if(i.className.indexOf(c)>-1){i.classList.add("show");count++;}});
+document.querySelectorAll("button").forEach(b=>b.classList.remove("active"));if(e)e.target.classList.add("active");
+document.getElementById("count").innerText=count+" results found";}
+filter("all");
+document.getElementById("search").onkeyup=function(){
+  let v=this.value.toLowerCase(),count=0;
+  document.querySelectorAll(".item").forEach(i=>{
+    i.classList.remove("show");
+    if(i.innerText.toLowerCase().includes(v)){i.classList.add("show");count++;}});
+  document.getElementById("count").innerText=count+" results found";};
+function toggleMode(){document.body.classList.toggle("dark");}
+document.querySelectorAll(".item img").forEach(img=>{
+  img.onclick=()=>{document.getElementById("lightbox").style.display="flex";
+  document.querySelector("#lightbox img").src=img.src;}});
+function closeLightbox(){document.getElementById("lightbox").style.display="none";}
+function shuffle(){let g=document.getElementById("gallery");for(let i=g.children.length;i>=0;i--){g.appendChild(g.children[Math.random()*i|0]);}}
+function sortAZ(){let g=document.getElementById("gallery"),arr=[...g.children];
+arr.sort((a,b)=>a.innerText.localeCompare(b.innerText));arr.forEach(i=>g.appendChild(i));}
+document.querySelectorAll(".fav").forEach(fav=>{
+  fav.onclick=()=>{fav.textContent=fav.textContent=="🤍"?"❤️":"🤍";}});</script></body></html>
